@@ -1,0 +1,455 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "This is API Documentation.",
+    "version": "1.0.0",
+    "title": "Express Auth",
+    "contact": {
+      "email": "FikriRNurhidayat@gmail.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "host": "",
+  "basePath": "/api",
+  "tags": [
+    {
+      "name": "User Operation",
+      "description": "Operations about user",
+      "externalDocs": {
+        "description": "Find out more about our store",
+        "url": "http://swagger.io"
+      }
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/user/create": {
+      "post": {
+        "tags": [
+          "User Operation"
+        ],
+        "summary": "Register User",
+        "description": "Regiter an user",
+        "operationId": "addUser",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Users that will be registered on database",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UserRegister"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "User successfully created."
+          }
+        }
+      }
+    },
+    "/user/login": {
+      "post": {
+        "tags": [
+          "User Operation"
+        ],
+        "summary": "Login User",
+        "description": "Login to registered user",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Will post username and password to database and database will check if it's true or not.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UserLogin"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "If user exist, and  the password is matched. It will response token object."
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ]
+      }
+    },
+    "/user/show": {
+      "get": {
+        "tags": [
+          "User Operation"
+        ],
+        "summary": "Show User",
+        "description": "Get user's details information",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "If access is given. It will show current user details."
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ]
+      }
+    },
+    "/user/update": {
+      "put": {
+        "tags": [
+          "User Operation"
+        ],
+        "summary": "Update user",
+        "description": "Update current user details information",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/UserUpdate"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "If access is given. It will update curren user details."
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ]
+      }
+    },
+    "/user/delete": {
+      "delete": {
+        "tags": [
+          "User Operation"
+        ],
+        "summary": "Delete User",
+        "description": "Delete current user",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "If access is given. It will delete current user."
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ]
+      }
+    },
+    "/user/todo/create": {
+      "post": {
+        "tags": [
+          "To do Operation"
+        ],
+        "summary": "Create To do",
+        "description": "Create To do for current user",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "It will create user to do if access is given.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Todo"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "If access is given. It will create current user to do."
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ]
+      }
+    },
+    "/user/todo/show": {
+      "get": {
+        "tags": [
+          "To do Operation"
+        ],
+        "summary": "Get all To do",
+        "description": "Get current user's all To do",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "If access is given. It will show current user's all To do."
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ]
+      }
+    },
+    "/user/todo/show/{id}": {
+      "get": {
+        "tags": [
+          "To do Operation"
+        ],
+        "summary": "Get User To do",
+        "description": "Get To do",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "If access is given. It will show current user's To do."
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ]
+      }
+    },
+    "/user/todo/update/{id}": {
+      "put": {
+        "tags": [
+          "To do Operation"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/TodoUpdate"
+            }
+          }
+        ],
+        "summary": "Update To do",
+        "description": "Update current user's To do",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "If access is given. It will update current user's To do."
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ]
+      }
+    },
+    "/user/todo/delete/{id}": {
+      "delete": {
+        "tags": [
+          "To do Operation"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "summary": "Delete To do",
+        "description": "Delete current user's To do",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "If access is given. It will delete current user's To do."
+          }
+        },
+        "security": [
+          {
+            "Authorization": []
+          }
+        ]
+      }
+    }
+  },
+  "securityDefinitions": {
+    "Authorization": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
+    }
+  },
+  "definitions": {
+    "UserRegister": {
+      "type": "object",
+      "required": [
+        "username",
+        "email",
+        "password"
+      ],
+      "properties": {
+        "username": {
+          "type": "string",
+          "example": "test123"
+        },
+        "email": {
+          "type": "string",
+          "example": "test@mail.com"
+        },
+        "password": {
+          "type": "string",
+          "example": "qwerty"
+        }
+      }
+    },
+    "UserLogin": {
+      "type": "object",
+      "required": [
+        "username",
+        "password"
+      ],
+      "properties": {
+        "username": {
+          "type": "string",
+          "example": "test123"
+        },
+        "password": {
+          "type": "string",
+          "example": "qwerty"
+        }
+      }
+    },
+    "UserUpdate": {
+      "type": "object",
+      "properties": {
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "Todo": {
+      "type": "object",
+      "required": [
+        "title",
+        "status",
+        "body"
+      ],
+      "properties": {
+        "title": {
+          "type": "string",
+          "example": "Tugas Kelompok"
+        },
+        "status": {
+          "type": "boolean",
+          "example": false
+        },
+        "dueDate": {
+          "type": "string",
+          "example": "Minggu Depan"
+        },
+        "body": {
+          "type": "string",
+          "example": "Mini Project To Do App"
+        }
+      }
+    },
+    "TodoUpdate": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "status": {
+          "type": "boolean"
+        },
+        "dueDate": {
+          "type": "string"
+        },
+        "body": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "Find out more about Swagger",
+    "url": "http://swagger.io"
+  }
+}
