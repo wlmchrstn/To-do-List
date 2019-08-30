@@ -4,22 +4,22 @@ const port = process.env.PORT || 3000;
 const mongoose = require('mongoose');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDoc = require('./swagger.json');
-const env = "mongodb+srv://William:mirai2704@todoapi-tmbsb.mongodb.net/test?retryWrites=true&w=majority" || 'development'
+const env = "mongodb+srv://William:mirai2704@todoapi-tmbsb.mongodb.net/test?retryWrites=true&w=majority"// || 'development'
 const router = require('./routes/index.js');
 
 
-if (env == 'development' || env == 'test') {
-    require('dotenv').config();
-}
+// if (env == 'development' || env == 'test') {
+//     require('dotenv').config();
+// }
 
-const dbConfig = {
-    development: process.env.DBDEV,
-    test: process.env.DBTEST,
-    user: process.env.DBLOGIN,
-    production: process.env.DBPROD,
-}
+// const dbConfig = {
+//     development: process.env.DBDEV,
+//     test: process.env.DBTEST,
+//     user: process.env.DBLOGIN,
+//     production: process.env.DBPROD,
+// }
 
-mongoose.connect(dbConfig[env], { useNewUrlParser: true, useCreateIndex: true}, (err)=>{
+mongoose.connect(env, { useNewUrlParser: true, useCreateIndex: true}, (err)=>{
     if(err) return console.log(err)
 });
 
