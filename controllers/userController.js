@@ -8,11 +8,11 @@ module.exports = {
 
     async create(req, res) {
         
-        let userUsername = await user.findOne({ username: req.body.username})
-        if (userUsername) return res.status(400).send(`${req.body.username} is already taken!`)
+        // let userUsername = await user.findOne({ username: req.body.username})
+        // if (userUsername) return res.status(400).send(`${req.body.username} is already taken!`)
         
-        let userEmail = await user.findOne({ email: req.body.email })
-        if (userEmail) return res.status(400).send(`${req.body.email} is already registered!`)
+        // let userEmail = await user.findOne({ email: req.body.email })
+        // if (userEmail) return res.status(400).send(`${req.body.email} is already registered!`)
         
         let pwd = req.body.password
         bcrypt.hash(pwd, salt)
