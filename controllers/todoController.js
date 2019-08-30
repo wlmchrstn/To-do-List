@@ -64,7 +64,7 @@ module.exports = {
                         { $pullAll: { todos: [req.params.id] } },
                         { safe: true, multi: true })
                         .then(result => {
-                            res.status(204).json( success(result, 'To do list deleted!') )
+                            res.status(200).json( success(result, 'To do list deleted!') )
                         })
                         .catch(err => {
                             res.status(422).json( error(err, 'Unexpected error!') )

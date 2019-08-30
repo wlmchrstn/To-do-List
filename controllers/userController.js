@@ -63,15 +63,5 @@ module.exports = {
         .catch(err => {
             return res.status(404).json( error(err,'User not found!') );
         });
-    },
-
-    showAll(req, res) {
-        user.find({})
-            .then(result => {
-                return res.status(200).json( success({id: result._id, username: result.username}, 'This is all user available!') )
-            })
-            .catch(err => {
-                return res.status(422).json( error(err, 'Unexpected error!'))
-            })
     }
 }

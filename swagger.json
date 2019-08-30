@@ -145,29 +145,6 @@
         ]
       }
     },
-    "/user/showall": {
-      "get": {
-        "tags": [
-          "User Operation"
-        ],
-        "summary": "Show All User",
-        "description": "Get all user information.",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "responses": {
-          "200": {
-            "description": "This is all user avaiable!"
-          },
-          "422": {
-            "description": "Unexpected error!"
-          }
-        }
-      }
-    },
     "/user/todo/create": {
       "post": {
         "tags": [
@@ -367,7 +344,7 @@
           "application/json"
         ],
         "responses": {
-          "204": {
+          "200": {
             "description": "Todo list deleted!"
           },
           "404": {
