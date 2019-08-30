@@ -5,14 +5,13 @@
     "version": "1.0.0",
     "title": "Express Auth",
     "contact": {
-      "email": "FikriRNurhidayat@gmail.com"
+      "email": "wlmchrstn@gmail.com"
     },
     "license": {
       "name": "Apache 2.0",
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
     }
   },
-  "host": "",
   "basePath": "/api",
   "tags": [
     {
@@ -57,6 +56,9 @@
         "responses": {
           "201": {
             "description": "User successfully created."
+          },
+          "400": {
+            "description": "Failed to create user"
           }
         }
       }
@@ -88,6 +90,9 @@
         "responses": {
           "200": {
             "description": "If user exist, and  the password is matched. It will response token object."
+          },
+          "403": {
+            "description": "Incorrect password or username."
           }
         },
         "security": [
@@ -103,7 +108,7 @@
           "User Operation"
         ],
         "summary": "Show User",
-        "description": "Get user's details information",
+        "description": "Get user's details information.",
         "consumes": [
           "application/json"
         ],
@@ -113,6 +118,9 @@
         "responses": {
           "200": {
             "description": "If access is given. It will show current user details."
+          },
+          "401": {
+            "description": "Access denied."
           }
         },
         "security": [

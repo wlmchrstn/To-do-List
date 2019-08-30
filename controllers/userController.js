@@ -26,11 +26,11 @@ module.exports = {
                 res.status(201).json( success({id: result._id, username: result.username}, 'User created!') )
             })
             .catch(err => {
-                res.status(422).json( error(err, 'Failed to create user!') )
+                res.status(400).json( error(err, 'Failed to create user!') )    
             })
         })
         .catch(err => {
-            res.status(422).json( error(err, 'Unexpected error!') )
+            res.status(400).json( error(err, 'Unexpected error!') )
         });
     },
 
@@ -45,13 +45,13 @@ module.exports = {
                     let token = jwt.sign({_id: data._id}, process.env.DBLOGIN);
                     res.status(200).json( success(token, 'Token created, access granted!') );
                 }
-                else {
-                    res.status(422).json( error(err, 'Incorrect password!') )
-                }
+            })
+            .catch(err => {
+                res.status(403).json( error(err, 'Incorrect password!') )
             })
         })
         .catch(err => {
-            res.status(422).json( error(err, "User not found!") )
+            res.status(404).json( error(err, "User not found!") )
         });
     },
 
@@ -61,7 +61,7 @@ module.exports = {
             return res.status(200).json( success({id: result._id, username: result.username, todo: result.todos}, "This is ur details information!") );
         })
         .catch(err => {
-            return res.status(422).json( error(err,'User is not found!') );
+            return res.status(404).json( error(err,'User is not found!') );
         });
     }
 }
