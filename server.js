@@ -7,10 +7,7 @@ const swaggerDoc = require('./swagger.json');
 const env = process.env.NODE_ENV || 'development'
 const router = require('./routes/index.js');
 
-
-if (env == 'development' || env == 'test') {
-    require('dotenv').config();
-}
+require('dotenv').config()
 
 const dbConfig = {
     development: process.env.DBDEV,
