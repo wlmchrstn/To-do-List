@@ -7,7 +7,10 @@ const swaggerDoc = require('./swagger.json');
 const env = process.env.NODE_ENV || 'development'
 const router = require('./routes/index.js');
 
-require('dotenv').config()
+
+if (env == 'development' || env == 'test') {
+    require('dotenv').config();
+}
 
 const dbConfig = {
     development: process.env.DBDEV,
@@ -15,22 +18,8 @@ const dbConfig = {
     user: process.env.DBLOGIN
 }
 
-// mongoose.connect(dbConfig[env], { useNewUrlParser: true, useCreateIndex: true});
+mongoose.connect(dbConfig[env], { useNewUrlParser: true, useCreateIndex: true});
 
-try{
-    mongoose.connect(dbConfig[env], 
-    { useNewUrlParser: true, useCreateIndex: true})
-  
-    app.listen(port, () => {
-        console.log(`Server Started at ${Date()}!`);
-        console.log(`Listening on port ${port}!`);
-        });
-  
-    console.log("success connect to database")
-  }
-  catch(error){
-    console.log(error)
-  };
 
 
 app.use(express.json());
@@ -52,9 +41,9 @@ app.get('/', (req, res) => {
 //     })
 // })
 
-// app.listen(port, () => {
-//     console.log(`Server started at ${Date()}!`);
-//     console.log(`Listening on port ${port}!`);
-// })
+app.listen(port, () => {
+    console.log(`Server started at ${Date()}!`);
+    console.log(`Listening on port ${port}!`);
+})
 
 module.exports = app;
