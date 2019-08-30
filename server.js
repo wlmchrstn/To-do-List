@@ -4,7 +4,7 @@ const port = process.env.PORT || 3000;
 const mongoose = require('mongoose');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDoc = require('./swagger.json');
-const env = process.env.NODE_ENV || 'development'
+const env = "mongodb+srv://William:mirai2704@todoapi-tmbsb.mongodb.net/test?retryWrites=true&w=majority" || 'development'
 const router = require('./routes/index.js');
 
 
