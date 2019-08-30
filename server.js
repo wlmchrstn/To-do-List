@@ -4,7 +4,7 @@ const port = process.env.PORT || 3000;
 const mongoose = require('mongoose');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDoc = require('./swagger.json');
-const env = "mongodb+srv://William:mirai2704@todoapi-tmbsb.mongodb.net/test?retryWrites=true&w=majority"// || 'development'
+// const env = process.env.NODE_ENV || 'development'
 const router = require('./routes/index.js');
 
 
@@ -19,7 +19,7 @@ const router = require('./routes/index.js');
 //     production: process.env.DBPROD,
 // }
 
-mongoose.connect(env, { useNewUrlParser: true, useCreateIndex: true}, (err)=>{
+mongoose.connect("mongodb+srv://William:mirai2704@todoapi-tmbsb.mongodb.net/test?retryWrites=true&w=majority", { useNewUrlParser: true, useCreateIndex: true}, (err)=>{
     if(err) return console.log(err)
 });
 
