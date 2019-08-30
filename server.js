@@ -4,12 +4,11 @@ const port = process.env.PORT || 3000;
 const mongoose = require('mongoose');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDoc = require('./swagger.json');
-const env = process.env.NODE_ENV || 'development'
+const env = process.env.NODE_ENV || 'production'
 const router = require('./routes/index.js');
 
-
-if (env == 'development' || env == 'test') {
-    require('dotenv').config();
+if (env == 'production') {
+    const dotenv = require('dotenv').config();
 }
 
 const dbConfig = {
@@ -17,6 +16,7 @@ const dbConfig = {
     test: process.env.DBTEST,
     user: process.env.DBLOGIN,
     production: process.env.DBPROD,
+    staging: "mongodb+srv://William:mirai2704@todoapi-tmbsb.mongodb.net/test?retryWrites=true&w=majority"
 }
 
 mongoose.connect(dbConfig[env], { useNewUrlParser: true, useCreateIndex: true}, (err)=>{
@@ -47,6 +47,7 @@ app.get('/', (req, res) => {
 app.listen(port, () => {
     console.log(`Server started at ${Date()}!`);
     console.log(`Listening on port ${port}!`);
+    // console.log(process.env)
 })
 
 module.exports = app;
