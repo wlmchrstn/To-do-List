@@ -18,8 +18,8 @@ const dbConfig = {
     production: process.env.DBPROD,
     staging: "mongodb+srv://William:mirai2704@todoapi-tmbsb.mongodb.net/test?retryWrites=true&w=majority"
 }
-
-mongoose.connect(dbConfig[env], { useNewUrlParser: true, useCreateIndex: true}, (err)=>{
+console.log(dbConfig[env])
+mongoose.connect(process.NODE_ENV, { useNewUrlParser: true, useCreateIndex: true}, (err)=>{
     if(err) return console.log(err)
 });
 
