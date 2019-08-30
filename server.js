@@ -19,7 +19,9 @@ const dbConfig = {
     production: process.env.DBPROD,
 }
 
-mongoose.connect(dbConfig[env], { useNewUrlParser: true, useCreateIndex: true});
+mongoose.connect(dbConfig[env], { useNewUrlParser: true, useCreateIndex: true}, (err)=>{
+    if(err) return console.log(err)
+});
 
 
 

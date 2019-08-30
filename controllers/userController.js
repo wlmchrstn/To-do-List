@@ -23,7 +23,7 @@ module.exports = {
                 password: hash
             })
             .then(result => {
-                res.status(201).json( success({id: result._id, username: result.username}, 'User created!') )
+                res.status(201).json( success(result, 'User created!') )
             })
             .catch(err => {
                 res.status(400).json( error(err, 'Failed to create user!') )    
