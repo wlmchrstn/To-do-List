@@ -8,11 +8,11 @@ module.exports = {
 
     async create(req, res) {
         
-        // let userUsername = await user.findOne({ username: req.body.username})
-        // if (userUsername) return res.status(400).send(`${req.body.username} is already taken!`)
+        let userUsername = await user.findOne({ username: req.body.username})
+        if (userUsername) return res.status(400).send(`${req.body.username} is already taken!`)
         
-        // let userEmail = await user.findOne({ email: req.body.email })
-        // if (userEmail) return res.status(400).send(`${req.body.email} is already registered!`)
+        let userEmail = await user.findOne({ email: req.body.email })
+        if (userEmail) return res.status(400).send(`${req.body.email} is already registered!`)
         
         let pwd = req.body.password
         bcrypt.hash(pwd, salt)
@@ -26,11 +26,11 @@ module.exports = {
                 res.status(201).json( success(result, 'User created!') )
             })
             .catch(err => {
-                res.status(400).json( error(err, 'Failed to create user!') )    
+                res.status(417).json( error(err, 'Failed to create user, please fulfill the requirement!') )    
             })
         })
         .catch(err => {
-            res.status(400).json( error(err, 'Unexpected error!') )
+            res.status(500).json( error(err, 'Unexpected error!') )
         });
     },
 
@@ -42,7 +42,7 @@ module.exports = {
             bcrypt.compare(pwd, hash)
             .then(result => {
                 if (result == true) {
-                    let token = jwt.sign({_id: data._id}, process.env.DBLOGIN);
+                    let token = jwt.sign({_id: data._id}, 'mirai');
                     res.status(200).json( success(token, 'Token created, access granted!') );
                 }
             })
@@ -61,7 +61,17 @@ module.exports = {
             return res.status(200).json( success({id: result._id, username: result.username, todo: result.todos}, "This is ur details information!") );
         })
         .catch(err => {
-            return res.status(404).json( error(err,'User is not found!') );
+            return res.status(404).json( error(err,'User not found!') );
         });
+    },
+
+    showAll(req, res) {
+        user.find({})
+            .then(result => {
+                return res.status(200).json( success({id: result._id, username: result.username}, 'This is all user available!') )
+            })
+            .catch(err => {
+                return res.status(422).json( error(err, 'Unexpected error!'))
+            })
     }
 }

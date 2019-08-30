@@ -55,10 +55,16 @@
         ],
         "responses": {
           "201": {
-            "description": "User successfully created."
+            "description": "User successfully created!"
           },
           "400": {
-            "description": "Failed to create user"
+            "description": "Username or email is already taken!"
+          },
+          "417": {
+            "description": "Failed to create user, please fulfill the requirement!"
+          },
+          "500": {
+            "description": "Unexpected error!"
           }
         }
       }
@@ -89,10 +95,13 @@
         ],
         "responses": {
           "200": {
-            "description": "If user exist, and  the password is matched. It will response token object."
+            "description": "Token created, access granted!"
+          },
+          "400": {
+            "description": "User not found!"
           },
           "403": {
-            "description": "Incorrect password or username."
+            "description": "Incorrect password!"
           }
         },
         "security": [
@@ -117,10 +126,16 @@
         ],
         "responses": {
           "200": {
-            "description": "If access is given. It will show current user details."
+            "description": "This is ur details information!"
           },
           "401": {
-            "description": "Access denied."
+            "description": "Please insert token!"
+          },
+          "403": {
+            "description": "Access denied!"
+          },
+          "404": {
+            "description": "User not found!"
           }
         },
         "security": [
@@ -128,6 +143,29 @@
             "Authorization": []
           }
         ]
+      }
+    },
+    "/user/showall": {
+      "get": {
+        "tags": [
+          "User Operation"
+        ],
+        "summary": "Show All User",
+        "description": "Get all user information.",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "This is all user avaiable!"
+          },
+          "422": {
+            "description": "Unexpected error!"
+          }
+        }
       }
     },
     "/user/todo/create": {
@@ -156,7 +194,22 @@
         ],
         "responses": {
           "201": {
-            "description": "If access is given. It will create current user to do."
+            "description": "Todo list created!"
+          },
+          "400": {
+            "description": "Failed to save todo list!"
+          },
+          "401": {
+            "description": "Please insert token!"
+          },
+          "403": {
+            "description": "Access denied!"
+          },
+          "404": {
+            "description": "User not found!"
+          },
+          "422": {
+            "description": "Unexpected error!"
           }
         },
         "security": [
@@ -181,7 +234,16 @@
         ],
         "responses": {
           "200": {
-            "description": "If access is given. It will show current user's all To do."
+            "description": "Thi is all ur todo list!"
+          },
+          "401": {
+            "description": "Please insert token!"
+          },
+          "403": {
+            "description": "Access denied!"
+          },
+          "422": {
+            "description": "Unexpected error!"
           }
         },
         "security": [
@@ -214,7 +276,16 @@
         ],
         "responses": {
           "200": {
-            "description": "If access is given. It will show current user's To do."
+            "description": "This is ur todo list details!"
+          },
+          "401": {
+            "description": "Please insert token!"
+          },
+          "403": {
+            "description": "Access denied!"
+          },
+          "404": {
+            "description": "Todo list not found!"
           }
         },
         "security": [
@@ -255,7 +326,16 @@
         ],
         "responses": {
           "200": {
-            "description": "If access is given. It will update current user's To do."
+            "description": "Todo list updated!"
+          },
+          "401": {
+            "description": "Please insert token!"
+          },
+          "403": {
+            "description": "Access denied!"
+          },
+          "422": {
+            "description": "Unexpected error!"
           }
         },
         "security": [
@@ -287,8 +367,14 @@
           "application/json"
         ],
         "responses": {
-          "200": {
-            "description": "If access is given. It will delete current user's To do."
+          "204": {
+            "description": "Todo list deleted!"
+          },
+          "404": {
+            "description": "Todo list not found!"
+          },
+          "422": {
+            "description": "Unexpected error!"
           }
         },
         "security": [
@@ -376,16 +462,20 @@
       "type": "object",
       "properties": {
         "title": {
-          "type": "string"
+          "type": "string",
+          "example": "title baru"
         },
         "status": {
-          "type": "boolean"
+          "type": "boolean",
+          "example": true
         },
         "dueDate": {
-          "type": "string"
+          "type": "string",
+          "example": "dueDate baru"
         },
         "body": {
-          "type": "string"
+          "type": "string",
+          "example": "body baru"
         }
       }
     }

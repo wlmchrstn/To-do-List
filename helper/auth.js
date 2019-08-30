@@ -8,11 +8,11 @@ module.exports = (req, res, next) => {
     const spt = token.split(" ")
     
     try {
-        const verified = jwt.verify(spt[1], process.env.DBLOGIN);
+        const verified = jwt.verify(spt[1], 'mirai');
         req.user = verified
         next();
     }
     catch(err) { 
-        res.status(422).json( error(err, 'Invalid token!') )
+        res.status(403).json( error(err, 'Invalid token!') )
     }
 }
