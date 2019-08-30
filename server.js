@@ -41,9 +41,9 @@ app.get('/', (req, res) => {
 //     })
 // })
 
-// app.listen(port, () => {
-//     console.log(`Server started at ${Date()}!`);
-//     console.log(`Listening on port ${port}!`);
-// })
+app.listen(port, () => {
+    console.log(`Server started at ${Date()}!`);
+    console.log(`Listening on port ${port}!`);
+})
 
 module.exports = app;

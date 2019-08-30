@@ -1,5 +1,4 @@
 const user = require('../models/userModel.js');
-const userValidator = require('../helper/validator.js');
 const bcrypt = require('bcrypt');
 const salt = 10;
 const jwt = require('jsonwebtoken');
@@ -63,25 +62,6 @@ module.exports = {
         })
         .catch(err => {
             return res.status(422).json( error(err,'User is not found!') );
-        });
-    },
-    update(req, res) {
-        user.findByIdAndUpdate(req.user, req.body)
-        .then(result => {
-            return res.status(200).json( success(result, 'User updated!') );
-        })
-        .catch(err => {
-            return res.status(422).json( error(err, 'Failed to update user!') );
-        });
-    },
-
-    delete(req, res) {
-        user.findByIdAndDelete(req.user)
-        .then(result => {
-            return res.status(200).json( success(result, 'User deleted!') );
-        })
-        .catch(err => {
-            return res.status(422).json( error(err, 'User not found!') );
         });
     }
 }

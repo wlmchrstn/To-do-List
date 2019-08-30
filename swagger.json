@@ -121,65 +121,6 @@
         ]
       }
     },
-    "/user/update": {
-      "put": {
-        "tags": [
-          "User Operation"
-        ],
-        "summary": "Update user",
-        "description": "Update current user details information",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "schema": {
-              "$ref": "#/definitions/UserUpdate"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "If access is given. It will update curren user details."
-          }
-        },
-        "security": [
-          {
-            "Authorization": []
-          }
-        ]
-      }
-    },
-    "/user/delete": {
-      "delete": {
-        "tags": [
-          "User Operation"
-        ],
-        "summary": "Delete User",
-        "description": "Delete current user",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "responses": {
-          "200": {
-            "description": "If access is given. It will delete current user."
-          }
-        },
-        "security": [
-          {
-            "Authorization": []
-          }
-        ]
-      }
-    },
     "/user/todo/create": {
       "post": {
         "tags": [
@@ -393,14 +334,6 @@
         "password": {
           "type": "string",
           "example": "qwerty"
-        }
-      }
-    },
-    "UserUpdate": {
-      "type": "object",
-      "properties": {
-        "password": {
-          "type": "string"
         }
       }
     },
