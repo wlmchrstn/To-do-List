@@ -97,7 +97,7 @@
           "200": {
             "description": "Token created, access granted!"
           },
-          "400": {
+          "404": {
             "description": "User not found!"
           },
           "403": {

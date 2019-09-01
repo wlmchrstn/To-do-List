@@ -36,23 +36,28 @@ module.exports = {
 
     login(req, res) {
         user.findOne({ username: req.body.username })
-        .then(data => {
+            .then(data => {
             let pwd = req.body.password;
             let hash = data.password;
             bcrypt.compare(pwd, hash)
-            .then(result => {
-                if (result == true) {
-                    let token = jwt.sign({_id: data._id}, 'mirai');
-                    res.status(200).json( success(token, 'Token created, access granted!') );
-                }
+                .then(result => {
+                    if (result !== true) {
+                        res.status(403).json( error('Incorrect password!'))
+                    }
+                    else if (result == true) {
+                        let token = jwt.sign({_id: data._id}, 'mirai');
+                        res.status(200).json( success(token, 'Token created, access granted!') );
+                    }
+                })
+                .catch(err => {
+                    if (!pwd) {
+                        res.status(403).json( error(err, 'Please insert your password!') )
+                    }
+                })
             })
             .catch(err => {
-                res.status(403).json( error(err, 'Incorrect password!') )
-            })
-        })
-        .catch(err => {
             res.status(404).json( error(err, "User not found!") )
-        });
+            });
     },
 
     show(req, res) {
