@@ -7,12 +7,10 @@ module.exports = {
         todo.create(req.body)
             .then(result => {
                 user.findById(req.user, (err, data) => {
-                    if (err) return res.status(404).json( error(err, 'User not found!') )
                     data.todos.push(result)
                     data.save();
                     result.users = req.user
                     result.save( (err, data) => {
-                        if (err) res.status(400).json( error(err, 'Failed to save to do list!') )
                         res.status(201).json( success(data, 'To do list created!') )
                     })
                 })
@@ -27,9 +25,6 @@ module.exports = {
             .then(result => {
                 return res.status(200).json( success(result, 'This is ur to do list details!') )
             })
-            .catch(err => {
-                return res.status(404).json( error(err, 'No to do list found!') )
-            })
     },
 
     getAllUserTodo(req, res) {
@@ -38,9 +33,6 @@ module.exports = {
             .then(result => {
                 return res.status(200).json( success({username: result.username, todo: result.todos}, 'This is ur to do lists!') )
             })
-            .catch(err => {
-                return res.status(422).json( error(err, 'Unexpected error!') )
-            });
     },
 
     updateUserTodo(req, res) {
@@ -49,7 +41,7 @@ module.exports = {
                 res.status(200).json( success(result,'To do list updated!') );
             })
             .catch(err => {
-                res.status(422).json( error(err, 'Unexpected error!') );
+                res.status(404).json( error(err, 'To do list not found!') );
             });
     },
 
@@ -66,13 +58,7 @@ module.exports = {
                             .then(result => {
                                 res.status(200).json( success(result, 'To do list deleted!') )
                             })
-                            .catch(err => {
-                                res.status(422).json( error(err, 'Unexpected error!') )
-                            })
                     )
-                    .catch(err => {
-                    return res.status(404).json( error(err, 'To do list not found!') )
-                    })
                 })
     }
 }

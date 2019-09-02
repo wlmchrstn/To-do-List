@@ -30,8 +30,4 @@ User.generateHash = function(data) {
     return bcrypt.hashSync(data, salt)
 }
 
-User.login = function(data, input) {
-    return bcrypt.compare(data, input)
-}
-
 module.exports = User

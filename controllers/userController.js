@@ -41,6 +41,7 @@ module.exports = {
             let hash = data.password;
             bcrypt.compare(pwd, hash)
                 .then(result => {
+                    /* istanbul ignore else */
                     if (result !== true) {
                         res.status(403).json( error('Incorrect password!'))
                     }
@@ -50,6 +51,7 @@ module.exports = {
                     }
                 })
                 .catch(err => {
+                    /* istanbul ignore else */
                     if (!pwd) {
                         res.status(403).json( error(err, 'Please insert your password!') )
                     }
@@ -65,8 +67,5 @@ module.exports = {
         .then(result => {
             return res.status(200).json( success({id: result._id, username: result.username, todo: result.todos}, "This is ur details information!") );
         })
-        .catch(err => {
-            return res.status(404).json( error(err,'User not found!') );
-        });
     }
 }

@@ -7,67 +7,170 @@ const expect = chai.expect;
 const User = require('../models/userModel.js');
 chai.use(chaiHttp)
 
-beforeEach(done => {
-    User.deleteMany({})
-        .then(result => {
-            console.log('beforeEach Success')
-            console.log(result)
-            done();
-        })
-        .catch(err => {
-            console.log('beforeEach Failed')
-            console.log(err)
-        })
-});
+var usertest = {
+    username: "prototype1",
+    email: "prototype1@gmail.com",
+    password: User.generateHash('prototype')
+}
 
-afterEach(done => {
+var login = {
+    username: "prototype1",
+    password: "prototype"
+}
+
+before(done => {
     User.deleteMany({})
         .then(result => {
-            console.log('afterEach Success')
-            console.log(result)
             done();
         })
         .catch(err => {
-            console.log('afterEach Failed')
             console.log(err)
         })
 })
 
-describe('CREATE user', ()=> {
+beforeEach(done => {
+    User.create(usertest)
+        .then(result => {
+            done();
+        })
+        .catch(err => {
+            console.log(err)
+        })
+});
+
+after(done => {
+    User.deleteMany({})
+        .then(result => {
+            done();
+        })
+        .catch(err => {
+            console.log(err)
+        })
+})
+
+describe('USER OPERATION', ()=> {
     it('It should create an user', (done)=> {
         chai.request(app)
             .post('/api/user/create')
             .send({
-                username: "wlmchrstn",
-                email: "wlmchrstn@gmail.com",
-                password: User.generateHash('123456789')
+                username: "satuduatiga",
+                email: "123@gmail.com",
+                password: "satu23"
             })
             .end((err, res) => {
-                console.log(res.body)
                 expect(res.status).to.equal(201);
                 done();
             });
     });
-});
 
-describe('LOGIN user', ()=> {
     it('It should login user', (done)=> {
-        let pwd = User.generateHash('123456789')
-        let testUser = {
-            username: 'testuser',
-            email: 'testuser@gmail.com',
-            password: pwd
-        }
-        User.create(testUser)
-        User.findOne({username: testUser.username})
-        User.login(testUser.password, pwd)
         chai.request(app)
             .post('/api/user/login')
-            .send({
-                username: 'testuser',
-                password: '123456789'
-            })
+            .send(login)
             .end((err, res)=> {
+                expect(res.status).to.equal(200)
+                done();
             });
         });
 });
+
+// For NEGATIVE CASE
+
+describe('USER CREATE NEGATIVE CASE', ()=> {
+
+    it("Username already taken", (done)=> {
+        chai.request(app)
+            .post('/api/user/create')
+            .send({
+                username: "prototype1",
+                email: "prototype3@gmail.com",
+                password: User.generateHash('prototype')
+            })
+            .end((err, res)=> {
+                expect(res.status).to.equal(400)
+                done();
+            })
+    })
+    
+    it("Email already taken", (done)=> {
+        chai.request(app)
+            .post('/api/user/create')
+            .send({
+                username: "prototype3",
+                email: "prototype1@gmail.com",
+                password: User.generateHash('prototype')
+            })
+            .end((err, res)=> {
+                expect(res.status).to.equal(400)
+                done();
+            })
+    })
+
+    it("Please fullfill requirement", (done)=> {
+        chai.request(app)
+            .post('/api/user/create')
+            .send({
+                username: "prototype3",
+                password: User.generateHash('prototype')
+            })
+            .end((err, res) => {
+                expect(res.status).to.equal(417)
+                done();
+            })
+    })
+
+    it("Unexpected Error", (done)=> {
+        chai.request(app)
+            .post('/api/user/create')
+            .send({
+                username: "1234",
+                email: "1234@gmail.com",
+                password: 1234
+            })
+            .end((err, res) => {
+                expect(res.status).to.equal(500)
+                done();
+            })
+    })
+})
+
+describe("USER LOGIN NEGATIVE CASE", ()=> {
+
+    it("Incorrect Password", (done)=> {
+        chai.request(app)
+            .post('/api/user/login')
+            .send({
+                username: "prototype1",
+                password: "incorrect"
+            })
+            .end((err, res) => {
+                expect(res.status).to.equal(403)
+                done();
+            })
+    })
+
+    it("Please insert passsword", (done)=> {
+        chai.request(app)
+            .post('/api/user/login')
+            .send({
+                username: "prototype1"
+            })
+            .end((err, res) => {
+                expect(res.status).to.equal(403)
+                done();
+            })
+    })
+
+    it("User not found", (done)=> {
+        chai.request(app)
+            .post('/api/user/login')
+            .send({
+                username: "notfound",
+                password: "prototype1"
+            })
+            .end((err, res) => {
+                expect(res.status).to.equal(404)
+                done();
+            })
+    })
+})
