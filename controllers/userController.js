@@ -65,7 +65,7 @@ module.exports = {
     show(req, res) {
         user.findById(req.user)
         .then(result => {
-            return res.status(200).json( success({id: result._id, username: result.username, todo: result.todos}, "This is ur details information!") );
+            return res.status(200).json( success({id: result._id, username: result.username, email: result.email, todo: result.todos}, "This is ur details information!") );
         })
     }
 }
